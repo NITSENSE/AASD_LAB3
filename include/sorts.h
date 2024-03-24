@@ -28,3 +28,11 @@ void BubbleSort(vector<T>& sort) {
 	}
 
 }
+
+template<typename T>
+void InsertionSort(vector<T>& sort) {
+	for (size_t i = 1; i < sort.size(); ++i) {
+		for (size_t j = i; j >= 1 && sort[j - 1] > sort[j]; j--)
+			swap(sort[j], sort[j - 1]);
+	}
+}
