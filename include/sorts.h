@@ -17,3 +17,14 @@ void SelectionSort(vector<T>& sort) {
 			swap(sort[i], sort[temp]);
 	}
 }
+
+template<typename T>
+void BubbleSort(vector<T>& sort) {
+	for (size_t i = sort.size() - 1; i > 0; --i) {
+		for (size_t j = 1; j <= i; ++j) {
+			if (sort[j] < sort[j - 1])
+				swap(sort[j], sort[j - 1]);
+		}
+	}
+
+}
