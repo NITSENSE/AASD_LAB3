@@ -58,3 +58,32 @@ void BinaryInsertionSort(vector<T>& sort) {
 	}
 }
 
+template <typename T>
+void ShelSort(vector<T>& sort) {
+	for (int step = sort.size() / 2; step > 0; step /= 2) {
+		for (int i = 0; i + step < sort.size(); i++) {
+			for (int j = i + step; j < sort.size(); j += step) {
+				if (sort[j] < sort[j - step])
+					swap(sort[j], sort[j - step]);
+			}
+		}
+	}
+}
+
+template <typename T>
+void ShackerSort(vector<T>& sort) {
+	int right = sort.size() - 1;
+	int left = 0;
+	while (left <= right) {
+		for (int i = left; i < right; i++) {
+			if (sort[i] > sort[i + 1])
+				swap(sort[i], sort[i + 1]);
+		}
+		--right;
+		for (int i = right; i > left; i--)
+			if (sort[i] < sort[i - 1])
+				swap(sort[i], sort[i - 1]);
+		++left;
+	}
+}
+
