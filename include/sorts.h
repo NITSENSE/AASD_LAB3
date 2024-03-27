@@ -87,3 +87,82 @@ void ShackerSort(vector<T>& sort) {
 	}
 }
 
+template <typename T>
+void QuickSort(vector<T>& sort, int low, int hight) {
+	int left = low;
+	int right = hight;
+
+	int pivot = (left + right) / 2;
+
+	while (left <= right) {
+		while (sort[left] < sort[pivot])
+			++left;
+		while (sort[right] > sort[pivot])
+			--right;
+		if (left <= right) {
+			swap(sort[left], sort[right]);
+			left++;
+			right--;
+		}
+		QuickSort(sort, low, right);
+		QuickSort(sort, left, hight);
+	}
+}
+
+template <typename T>
+void CombSort(vector<T>& sort) {
+	const double factor = 1.247;
+	int step = (sort.size() - 1) / factor;
+	while (step >= 1) {
+		for (int i = step; i < sort.size(); i++) {
+			if (sort[i] < sort[i - step])
+				swap(sort[i], sort[i - step]);
+		}
+		step /= factor;
+	}
+}
+
+template<typename T>
+void Merge(std::vector<T>& sort, int left, int mid, int right) {
+
+	size_t i = left; 
+	size_t j = mid + 1; 
+
+	vector<T> temp; 
+
+	while (i <= mid && j <= right) {
+		if (sort[i] < sort[j]) {
+			temp.push_back(sort[i++]);
+		}
+		else {
+			temp.push_back(sort[j++]);
+		}
+	}
+	while (i <= mid) {
+		temp.push_back(sort[i++]);
+	}
+
+	while (j <= right) {
+		temp.push_back(sort[j++]);
+	}
+
+	for (size_t i = left; i <= right; ++i) {
+		sort[i] = temp[i - left];
+	}
+}
+
+template<typename T>
+void MergeSort(vector<T>& sort, size_t left, size_t right) {
+	if (left < right) {
+		size_t mid = left + (right - left) / 2;
+		MergeSort(sort, left, mid);
+		MergeSort(sort, mid + 1, right);
+
+		Merge(sort, left, mid, right);
+	}
+}
+
+template<typename T>
+void NatureMergeSort(vector<T>& sort) {
+	MergeSort(sort, 0, sort.size() - 1);
+}
