@@ -1,21 +1,27 @@
 #pragma once
 #include <vector>
 #include <iostream>
-
+#include "stats.h"
 using namespace std;
 
 
 template<typename T>
-void SelectionSort(vector<T>& sort) {
+Stats SelectionSort(vector<T>& sort) {
+	Stats stats;
 	for (int i = 0; i < sort.size(); ++i) {
 		int temp = i;
 		for (int j = i; j < sort.size(); ++j) {
+			stats.comparison_count++;
 			if (sort[temp] > sort[j])
 				temp = j;
 		}
-		if (i != temp)
+		stats.comparison_count++;
+		if (i != temp) {
 			swap(sort[i], sort[temp]);
+			stats.copy_count += 2;
+		}
 	}
+	return stats;
 }
 
 template<typename T>
@@ -59,15 +65,19 @@ void BinaryInsertionSort(vector<T>& sort) {
 }
 
 template <typename T>
-void ShelSort(vector<T>& sort) {
+Stats ShelSort(vector<T>& sort) {
+	Stats stats;
 	for (int step = sort.size() / 2; step > 0; step /= 2) {
 		for (int i = 0; i + step < sort.size(); i++) {
 			for (int j = i + step; j < sort.size(); j += step) {
+				stats.comparison_count++;
 				if (sort[j] < sort[j - step])
+					stats.copy_count += 2;
 					swap(sort[j], sort[j - step]);
 			}
 		}
 	}
+	return stats;
 }
 
 template <typename T>
@@ -123,7 +133,7 @@ void CombSort(vector<T>& sort) {
 }
 
 template<typename T>
-void Merge(std::vector<T>& sort, int left, int mid, int right) {
+void Merge(vector<T>& sort, int left, int mid, int right, Stats& stat) {
 
 	size_t i = left; 
 	size_t j = mid + 1; 
@@ -131,28 +141,34 @@ void Merge(std::vector<T>& sort, int left, int mid, int right) {
 	vector<T> temp; 
 
 	while (i <= mid && j <= right) {
+		stat.comparison_count++;
 		if (sort[i] < sort[j]) {
 			temp.push_back(sort[i++]);
+			stat.copy_count++;
 		}
 		else {
 			temp.push_back(sort[j++]);
+			stat.copy_count++;
 		}
 	}
 	while (i <= mid) {
 		temp.push_back(sort[i++]);
+		stat.copy_count++;
 	}
 
 	while (j <= right) {
 		temp.push_back(sort[j++]);
+		stat.copy_count++;
 	}
 
 	for (size_t i = left; i <= right; ++i) {
 		sort[i] = temp[i - left];
+		stat.copy_count++;
 	}
 }
 
 template<typename T>
-void MergeSort(vector<T>& sort, size_t left, size_t right) {
+void MergeSort(vector<T>& sort, int left, int right, Stats& stat) {
 	if (left < right) {
 		size_t mid = left + (right - left) / 2;
 		MergeSort(sort, left, mid);
@@ -163,6 +179,8 @@ void MergeSort(vector<T>& sort, size_t left, size_t right) {
 }
 
 template<typename T>
-void NatureMergeSort(vector<T>& sort) {
+Stats NatureMergeSort(vector<T>& sort) {
+	Stats stat;
 	MergeSort(sort, 0, sort.size() - 1);
+	return stat;
 }
