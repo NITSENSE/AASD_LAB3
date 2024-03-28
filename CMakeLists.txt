@@ -19,13 +19,10 @@ FetchContent_Declare(googletest URL https://github.com/google/googletest/archive
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_library(_sorts "include/sorts.h" "include/generate_arr.h" "include/stats.h" "include/analis.h")
+add_library(_sorts "include/sorts.h" "include/generate_arr.h" "include/stats.h" "include/analis.h" "include/students.h")
 set_target_properties(_sorts PROPERTIES LINKER_LANGUAGE CXX)
 target_compile_features(_sorts PUBLIC cxx_std_23)
 
 
-add_executable(main "src/main.cc" "include/generate_arr.h" "include/analis.h")
+add_executable(main "src/main.cc")
 
-add_executable(tests "src/tests.cc" "include/generate_arr.h" "include/analis.h")
-target_link_libraries(tests gtest gtest_main linked_list)
-target_include_directories(tests PRIVATE "${CMAKE_SOURCE_DIR}")

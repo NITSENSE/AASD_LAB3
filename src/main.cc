@@ -2,6 +2,7 @@
 #include "../include/sorts.h"
 #include "../include/generate_arr.h"
 #include "../include/analis.h"
+#include "../include/Students.h"
 
 template<typename T>
 void printArr(std::vector<T> arr) {
@@ -12,14 +13,20 @@ void printArr(std::vector<T> arr) {
 
 using namespace std;
 int main() {
-	/*std::vector<int> arr{ 1, 4, 7, 3, 9, 8, 5, 6, 2};
-	printArr(arr);
-	std::cout << std::endl;
-	nTWMergeSort(arr);
-	printArr(arr);
+	vector<string> str = { "book", "program", "ocean", "Tea", "loop", "slow", "growth", "apps" };
+	printArr(str);
+	cout << endl;
+	Stats stat = NatureMergeSort(str);
+	printArr(str);
+	cout << endl;
+	vector<Students> students = { Students("Natasha", 2), Students("Vova", 3), Students("Misha", 1), Students("Petia", 2), Students("Sonya", 5) };
+	cout << students;
+	Stats stats = SelectionSort(students);
+	cout << students;
+	stats.print();
+	cout << "_________________________________________________________________" << endl;
 
-	cocktailSort(arr);
-	printArr(arr);*/
+	/*_________________________________________________________________________________*/
 
 	vector<size_t> lens_arr = { 1000, 2000, 3000, 4000, 5000, 10000, 25000, 50000 };
 	int lower_bound = 1;
