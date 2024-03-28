@@ -25,7 +25,7 @@ void GetStats(int lower_bound, int upper_bound, size_t num_arr, const std::vecto
 	std::cout <<"_________________________________________" << std::endl;
 }
 
-void getStatsSortArr(const std::vector<size_t>& arr_len, std::vector<int>(*GenerateFunction)(size_t length), Stats(*SortingFunction)(std::vector<int>& arr)) {
+void GetStatsSortArr(const std::vector<size_t>& arr_len, std::vector<int>(*GenerateFunction)(size_t length), Stats(*SortingFunction)(std::vector<int>& arr)) {
 	for (size_t i = 0; i < arr_len.size(); ++i) {
 		std::vector<int> arr = GenerateFunction(arr_len[i]);
 		Stats stat = SortingFunction(arr);

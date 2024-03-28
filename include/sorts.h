@@ -67,7 +67,25 @@ void BinaryInsertionSort(vector<T>& sort) {
 template <typename T>
 Stats ShelSort(vector<T>& sort) {
 	Stats stats;
-	for (int step = sort.size() / 2; step > 0; step /= 2) {
+	int n = sort.size();
+	int gap = n / 2;
+
+	while (gap > 0) {
+		for (int i = gap; i < n; ++i) {
+			int temp = sort[i];
+			int j = i;
+			stats.comparison_count++;
+			while (j >= gap && sort[j - gap] > temp) {
+				stats.comparison_count++;
+				stats.copy_count+=2;
+				sort[j] = sort[j - gap];
+				j -= gap;
+			}
+			sort[j] = temp;
+		}
+		gap /= 2;
+	}
+	/*for (int step = sort.size() / 2; step > 0; step /= 2) {
 		for (int i = 0; i + step < sort.size(); i++) {
 			for (int j = i + step; j < sort.size(); j += step) {
 				stats.comparison_count++;
@@ -76,7 +94,7 @@ Stats ShelSort(vector<T>& sort) {
 					swap(sort[j], sort[j - step]);
 			}
 		}
-	}
+	}*/
 	return stats;
 }
 
@@ -171,16 +189,17 @@ template<typename T>
 void MergeSort(vector<T>& sort, int left, int right, Stats& stat) {
 	if (left < right) {
 		size_t mid = left + (right - left) / 2;
-		MergeSort(sort, left, mid);
-		MergeSort(sort, mid + 1, right);
+		MergeSort(sort, left, mid, stat);
+		MergeSort(sort, mid + 1, right, stat);
 
-		Merge(sort, left, mid, right);
+		Merge(sort, left, mid, right, stat);
 	}
 }
 
 template<typename T>
 Stats NatureMergeSort(vector<T>& sort) {
 	Stats stat;
-	MergeSort(sort, 0, sort.size() - 1);
+	MergeSort(sort, 0, sort.size() - 1, stat);
 	return stat;
 }
+
